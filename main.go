@@ -1,19 +1,29 @@
 package main
 
 import (
-	"fmt"
 	"bancoAlura/contas"
+	"fmt"
 )
 
+func PagarBoleto(conta verificarConta, valorDoBoleto float64)  {
+	conta.Sacar(valorDoBoleto)
+}
+
+type verificarConta interface {
+	Sacar(valor float64) string  
+}
+
 func main() {
-	contaDaSilvia := contas.ContaCorrente{Titular: "Silvia", Saldo: 300}
-	contaDoGustavo := contas.ContaCorrente{Titular: "Gustavo", Saldo: 100}
+	contaDoHelio := contas.ContaPoupanca{}
+	contaDoHelio.Depositar(900)
+	PagarBoleto(&contaDoHelio, 60)
 
-	fmt.Println(contaDaSilvia.Saldo)
-	fmt.Println(contaDoGustavo.Saldo)
+	fmt.Println(contaDoHelio.ObterSaldo())
 
-	fmt.Println(contaDaSilvia.Transferir(300, &contaDoGustavo))
+	contaDaLuisa := contas.ContaCorrente{}
+	contaDaLuisa.Depositar(600)
 
-	fmt.Println(contaDaSilvia.Saldo)
-	fmt.Println(contaDoGustavo.Saldo)
+	PagarBoleto(&contaDaLuisa, 400)
+
+	fmt.Println(contaDaLuisa.ObterSaldo())
 }
